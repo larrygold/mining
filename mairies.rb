@@ -26,10 +26,10 @@ def get_all_the_urls_of_val_doise_townhalls
       page_url = i['href']
       page_url[0] = ""
       url = "http://annuaire-des-mairies.com" + page_url
-      nom_ville = i.content
+      nom_ville = i.text
 
       url_hash = Hash.new
-      url_hash[:name] = url
+      url_hash[:name] = nom_ville
       url_hash[:email] = get_the_email_of_a_townhal_from_its_webpage(url)
       array_of_hashes[j] = url_hash
 
