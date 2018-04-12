@@ -7,31 +7,23 @@ def get_stock
 
   page = Nokogiri::HTML(open("https://coinmarketcap.com/all/views/all/"))
 
-  i=1
-  array_currencies = Array.new
+  symbols = page.css(".col-symbol").map {|x| x.content}
+  prices = page.css("a.price").map {|x| x.content}
 
-    while i<page.css("tbody > tr").length
+  i=0
+  myarray = Array.new
 
-    price = page.css("tr:nth-child(#{i}) .price").text
-    symbol = page.css("tr:nth-child(#{i}) .col-symbol").text
-
-
-    hash_currencies = Hash.new
-    hash_currencies[:symbol] = symbol
-    hash_currencies[:price] = price
-
-
-    array_currencies[i-1] = hash_currencies
-
+  while i<symbols.length
+    myhash = Hash.new
+    myhash[:symbols] = symbols[i]
+    myhash[:prices] = prices[i]
+    myarray[i] = myhash
     i+=1
+  end
 
-    end
-
-
-    print array_currencies
+  print myarray
 
 end
-
 
 
 def each_hour
